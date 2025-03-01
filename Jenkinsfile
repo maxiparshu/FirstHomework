@@ -28,7 +28,7 @@ pipeline {
                 script {
                     WAR_FILE = sh(script: 'echo target/*.war', returnStdout: true).trim()
                     // Копируем WAR файл в папку webapps на сервере Tomcat
-                    sh "scp -i C:/Users/Пользователь/.ssh/id_rsa ${WAR_FILE} ${TOMCAT_USER}@${TOMCAT_HOST}:${TOMCAT_WEBAPPS}"
+                    sh "scp ${WAR_FILE} ${TOMCAT_USER}@${TOMCAT_HOST}:${TOMCAT_WEBAPPS}"
                     // Перезапускаем Tomcat, чтобы он развернул новый WAR
                     sh "ssh ${TOMCAT_USER}@${TOMCAT_HOST} 'sudo systemctl restart tomcat'"
                 }
