@@ -38,6 +38,7 @@ pipeline {
                     sh "mv ${WAR_FILE} ${RENAMED_FILE}"  // Переименовываем файл
                 }
             }
+        }
         stage('Deploy to Tomcat') {
             steps {
                 script {
