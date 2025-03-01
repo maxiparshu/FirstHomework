@@ -9,6 +9,13 @@ pipeline {
     }
 
     stages {
+        stage('Check User') {
+            steps {
+                script {
+                    sh "whoami"
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'Github-Jenkins', url: 'git@github.com:maxiparshu/FirstHomework.git'
