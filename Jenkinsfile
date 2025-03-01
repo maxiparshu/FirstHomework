@@ -29,13 +29,20 @@ pipeline {
                 }
             }
         }
-
+        stage('Rename WAR File') {
+            steps {
+                script {
+                    // Переименовываем WAR файл
+                    WAR_FILE = sh(script: 'echo target/*.war', returnStdout: true).trim()
+                    RENAMED_FILE = "target/firsthomework.war"  // Новое имя файла
+                    sh "mv ${WAR_FILE} ${RENAMED_FILE}"  // Переименовываем файл
+                }
+            }
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    WAR_FILE = sh(script: 'echo target/*.war', returnStdout: true).trim()
                     // Копируем WAR файл в папку webapps на сервере Tomcat
-                    sh "scp ${WAR_FILE} ${TOMCAT_USER}@${TOMCAT_HOST}:${TOMCAT_WEBAPPS}"
+                    sh "scp ${RENAMED_FILE} ${TOMCAT_USER}@${TOMCAT_HOST}:${TOMCAT_WEBAPPS}"
                     // Перезапускаем Tomcat, чтобы он развернул новый WAR
                     sh "ssh ${TOMCAT_USER}@${TOMCAT_HOST} 'sudo systemctl restart tomcat'"
                 }
