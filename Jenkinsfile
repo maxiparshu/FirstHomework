@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         TOMCAT_USER = 'user'  // Твой пользователь на сервере
-        TOMCAT_HOST = '192.168.1.103'  // IP адрес сервера
+        TOMCAT_HOST = '192.168.1.111'  // IP адрес сервера
         TOMCAT_PORT = '8085'
         TOMCAT_WEBAPPS = '/opt/tomcat/webapps/'
     }
