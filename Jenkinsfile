@@ -53,7 +53,7 @@ pipeline {
 
     post {
         always {
-            // Можно добавить очистку или другие действия после деплоя
+            
             echo 'Deployment finished'
         }
     }
