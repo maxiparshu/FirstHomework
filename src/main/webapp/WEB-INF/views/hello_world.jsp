@@ -8,6 +8,7 @@
     <title>Hello World</title>
 </head>
 <body>
-    <h2>${hello_world.MESSAGE + hello_world.version}</h2>
+    <h2>${hello_world.MESSAGE}</h2>
+    <h3>${hello_world.version}</h3>
 </body>
 </html>
