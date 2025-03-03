@@ -48,7 +48,7 @@ pipeline {
                     ssh -i %PRIVATE_KEY% -o StrictHostKeyChecking=no %SERVER_USER%@%SERVER_HOST% "sudo systemctl stop tomcat"
 
                     echo Copying new WAR file...
-                    scp -i %PRIVATE_KEY% -P %SERVER_SSH_PORT% target/your-app.war %SERVER_USER%@%SERVER_HOST%:/opt/tomcat/webapps/
+                    scp -i %PRIVATE_KEY% -P %SERVER_SSH_PORT% ${RENAMED_FILE}" %SERVER_USER%@%SERVER_HOST%:/opt/tomcat/webapps/
 
                     echo Starting Tomcat...
                     ssh -i %PRIVATE_KEY% -o StrictHostKeyChecking=no %SERVER_USER%@%SERVER_HOST% "sudo systemctl start tomcat"
