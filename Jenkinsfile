@@ -43,23 +43,16 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    sshagent(['jenkins-ssh-key']) { // Убедитесь, что добавили ключ SSH в Jenkins
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_HOST} -p ${SERVER_SSH_PORT} << 'EOF'
-                            echo "Stopping Tomcat..."
-                            ${TOMCAT_DIR}/bin/shutdown.sh || echo "Tomcat is not running"
+                    bat """
+                    echo Stopping Tomcat...
+                    ssh -i %PRIVATE_KEY% -o StrictHostKeyChecking=no %SERVER_USER%@%SERVER_HOST% "sudo systemctl stop tomcat"
 
-                            echo "Removing old WAR file..."
-                            rm -rf ${DEPLOY_PATH}/${RENAMED_FILE} ${DEPLOY_PATH}/${RENAMED_FILE}
+                    echo Copying new WAR file...
+                    scp -i %PRIVATE_KEY% -P %SERVER_SSH_PORT% target/your-app.war %SERVER_USER%@%SERVER_HOST%:/opt/tomcat/webapps/
 
-                            echo "Copying new WAR file..."
-                            scp -P ${SERVER_SSH_PORT} ${RENAMED_FILE} ${SERVER_USER}@${SERVER_HOST}:${DEPLOY_PATH}/
-
-                            echo "Starting Tomcat..."
-                            ${TOMCAT_DIR}/bin/startup.sh
-                            EOF
-                        """
-                    }
+                    echo Starting Tomcat...
+                    ssh -i %PRIVATE_KEY% -o StrictHostKeyChecking=no %SERVER_USER%@%SERVER_HOST% "sudo systemctl start tomcat"
+                    """
                 }
             }
         }
