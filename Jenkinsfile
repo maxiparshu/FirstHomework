@@ -50,7 +50,7 @@ pipeline {
                             ${TOMCAT_DIR}/bin/shutdown.sh || echo "Tomcat is not running"
 
                             echo "Removing old WAR file..."
-                            rm -rf ${DEPLOY_PATH}/${RENAMED_FILE} ${DEPLOY_PATH}/${WAR_NAME%.war}
+                            rm -rf ${DEPLOY_PATH}/${RENAMED_FILE} ${DEPLOY_PATH}/${RENAMED_FILE}
 
                             echo "Copying new WAR file..."
                             scp -P ${SERVER_SSH_PORT} ${RENAMED_FILE} ${SERVER_USER}@${SERVER_HOST}:${DEPLOY_PATH}/
