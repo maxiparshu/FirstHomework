@@ -10,7 +10,7 @@ public class HelloWorldController {
   @RequestMapping("/hello_world")
   public String helloWorldHandler(Model model){
     HelloWorld helloWorld = new HelloWorld();
-    helloWorld.setVersion("1.0");
+    helloWorld.setVersion("1.1");
     model.addAttribute("hello_world", helloWorld);
     return "hello_world";
   }
